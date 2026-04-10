@@ -1,60 +1,115 @@
 // ─────────────────────────────────────────────
-// api/claude.js
-// All Claude API calls live here.
-// Swap mock responses for real fetch() calls
-// when you have your API key / backend ready.
+// api/claude.js (Fully Synced with Real Backend)
 // ─────────────────────────────────────────────
 
-import { MOCK_CLASSIFICATION } from "../constants/mockData";
+// বাংলা টেক্সট ডিটেক্ট করার জন্য ছোট্ট একটা ফাংশন
+const detectLanguage = (text) => {
+  const isBengali = /[\u0980-\u09FF]/.test(text);
+  return isBengali ? "bn" : "en";
+};
 
-const USE_MOCK = true; // ← flip to false when backend is ready
+// ── Step 1: Classify Problem (/api/analyze) ──
+export async function classifyProblem(text) {
+  const payload = {
+    problem: text,
+    language: detectLanguage(text) // Auto detect 'en' or 'bn'
+  };
 
-// ── Helper ────────────────────────────────────
-async function callClaude(prompt) {
-  const response = await fetch("/api/claude", {   // your backend proxy
+  const response = await fetch("/api/analyze", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt }),
+    body: JSON.stringify(payload), 
   });
-  if (!response.ok) throw new Error("API request failed");
+  
+  if (!response.ok) throw new Error("API request failed on /api/analyze");
+  return response.json(); 
+}
+
+// ── Step 3: Find Laws (/api/build-case) ──
+export async function buildCase(caseData) {
+  const payload = {
+    problem: caseData.problemText,
+    // যদি Step 1 থেকে entities না আসে, তবে ফাঁকা অবজেক্ট পাঠাবো
+    entities: caseData.classification?.entities || { names: [], amounts: [] },
+    evidence: caseData.documents || [],
+    language: detectLanguage(caseData.problemText)
+  };
+
+  const response = await fetch("/api/build-case", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  
+  if (!response.ok) throw new Error("Failed to build case");
   return response.json();
 }
 
-// ── Step 1: Classify the user's problem ───────
-// Returns: { type, forum, confidence, summary }
-export async function classifyProblem(text) {
-  if (USE_MOCK) {
-    await delay(1200);
-    return MOCK_CLASSIFICATION;
-  }
+// ── Step 5: Risk Analysis (/api/risk-analysis) ──
+export async function analyzeRisks(caseData) {
+  const payload = {
+    caseSummary: caseData.classification?.summary || caseData.problemText,
+    evidence: caseData.documents || [],
+    relevantLaws: caseData.laws || []
+  };
 
-  const prompt = `
-You are a legal AI assistant for India.
-The user described their legal problem below.
-Classify it and respond ONLY with valid JSON.
-
-Problem: "${text}"
-
-JSON format:
-{
-  "type": "short case type e.g. Property Fraud",
-  "forum": "correct Indian forum/court",
-  "confidence": "High | Medium | Low",
-  "summary": "2-sentence plain-English explanation"
-}
-  `.trim();
-
-  const data = await callClaude(prompt);
-  return JSON.parse(data.text);
+  const response = await fetch("/api/risk-analysis", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return response.json();
 }
 
-// ── Add more API functions below as you build ──
-// export async function analyzeRisks(caseData) { ... }
-// export async function generateComplaint(caseData) { ... }
-// export async function getOppositionArguments(caseData) { ... }
+// ── Step 6: Opposition Agent (/api/opposition-agent) ──
+export async function getOppositionArguments(caseData) {
+  const payload = {
+    caseSummary: caseData.classification?.summary || caseData.problemText,
+    evidence: caseData.documents || [],
+    relevantLaws: caseData.laws || []
+  };
 
+  const response = await fetch("/api/opposition-agent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return response.json();
+}
 
-// ── Internal ──────────────────────────────────
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+// ── Step 7: Draft Complaint (/api/generate-complain) ──
+// Note: আপনার দেওয়া URL এ generate-complain লেখা আছে (t নেই), তাই সেটাই দিলাম
+export async function generateComplaint(caseData) {
+  const payload = {
+    caseSummary: caseData.classification?.summary || caseData.problemText,
+    timeline: caseData.timeline || [],
+    evidence: caseData.documents || [],
+    relevantLaws: caseData.laws || [],
+    riskAnalysis: caseData.risks || {},
+    language: detectLanguage(caseData.problemText)
+  };
+
+  const response = await fetch("/api/generate-complain", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return response.json();
+}
+
+// ── Extra: Similar Cases Search (/api/similar-cases) ──
+// আপনার দেওয়া 5000 পোর্টের URL অনুযায়ী
+export async function getSimilarCases(summary, domain) {
+  const payload = {
+    caseSummary: summary,
+    domain: domain
+  };
+
+  // যদি এটা 5000 পোর্টে চলে, তবে ফুল URL দিতে হবে (নয়তো Proxy 8000 এ পাঠিয়ে দেবে)
+  const response = await fetch("http://localhost:5000/api/similar-cases", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return response.json();
 }

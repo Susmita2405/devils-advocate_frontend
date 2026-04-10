@@ -1,0 +1,122 @@
+/* Dashboard Layout: Left (Doc) and Right (Stats) */
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2:1 Ratio. বাঁ দিক বড়, ডান দিক ছোট */
+  gap: 24px;
+  animation: fadeIn 0.5s ease;
+  align-items: start; /* উপর থেকে শুরু হবে */
+}
+
+/* Document Panel (Left) */
+.documentPanel {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeader {
+  background: var(--color-bg-subtle);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panelHeader h3 { margin: 0; font-size: 16px; color: var(--color-text-primary); }
+
+.downloadBtn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.documentBody {
+  padding: 24px;
+  max-height: 500px;
+  overflow-y: auto;
+  background: #fdfdfd; /* কাগজের মতো ফীল দেওয়ার জন্য একটু আলাদা কালার */
+}
+
+.docText {
+  white-space: pre-wrap;
+  font-family: serif; /* লিগ্যাল ডকুমেন্টের ফন্ট */
+  color: #333; /* ডার্ক মোডেও ডকুমেন্ট সাদা কাগজের উপর কালো লেখায় ভালো লাগে */
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Analytics Panel (Right) */
+.analyticsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panelTitle {
+  font-size: 16px;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.statBox {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.statValueWin {
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--color-success-text); /* সবুজ */
+  margin-bottom: 4px;
+}
+
+.statValueNormal {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--primary-l); /* নীল */
+  margin-bottom: 4px;
+}
+
+.statSub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.timeGrid {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  background: var(--color-bg-subtle);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.timeCol { display: flex; flex-direction: column; gap: 4px; }
+.timeTitle { font-size: 12px; color: var(--color-text-secondary); }
+.timeBad { font-weight: bold; color: var(--color-danger-text); }
+.timeGood { font-weight: bold; color: var(--color-success-text); }
+
+/* Responsive: ছোট স্ক্রিনে (মোবাইল) নিচে নিচে দেখাবে */
+@media (max-width: 768px) {
+  .dashboardContainer {
+    grid-template-columns: 1fr;
+  }
+}
