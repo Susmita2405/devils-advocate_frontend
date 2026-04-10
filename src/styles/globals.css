@@ -1,0 +1,80 @@
+/* ─────────────────────────────────────────────
+   globals.css
+   Base styles + CSS variables for all of NyayaAI
+   ───────────────────────────────────────────── */
+
+/* 1. Variables */
+:root {
+  --color-bg:           #ffffff;
+  --color-bg-subtle:    #f7f7f5;
+  --color-border:       #e5e5e5;
+  --color-border-dark:  #cccccc;
+
+  --color-text-primary:   #111111;
+  --color-text-secondary: #666666;
+  --color-text-muted:     #999999;
+
+  /* semantic */
+  --color-danger-bg:   #fde8e8;
+  --color-danger-text: #9b1c1c;
+  --color-info-bg:     #e0f0ff;
+  --color-info-text:   #1a4f82;
+  --color-success-bg:  #e6f4ea;
+  --color-success-text:#1a5c2e;
+  --color-warn-bg:     #fef9e7;
+  --color-warn-text:   #7d5a00;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Fira Code", "Cascadia Code", monospace;
+
+  --shadow-card: 0 1px 4px rgba(0,0,0,0.06);
+  --transition: 0.15s ease;
+}
+
+/* 2. Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  min-height: 100vh;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. Typography scale */
+h1 { font-size: 24px; font-weight: 600; }
+h2 { font-size: 20px; font-weight: 600; }
+h3 { font-size: 16px; font-weight: 500; }
+p  { font-size: 14px; color: var(--color-text-secondary); }
+
+/* 4. Utility */
+.text-muted   { color: var(--color-text-muted); }
+.text-sm      { font-size: 12px; }
+.text-xs      { font-size: 11px; }
+.font-medium  { font-weight: 500; }
+.mt-1 { margin-top: 4px; }
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mb-1 { margin-bottom: 4px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-4 { margin-bottom: 16px; }
+.flex { display: flex; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.items-center { align-items: center; }
+.flex-wrap { flex-wrap: wrap; }
+.w-full { width: 100%; }

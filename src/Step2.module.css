@@ -1,0 +1,176 @@
+/* steps/Step2/Step2.module.css */
+
+.wrapper {
+  max-width: 640px;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+}
+
+/* Drop zone */
+.dropZone {
+  border: 1.5px dashed var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+.dropZone:hover {
+  background: var(--color-bg-subtle);
+  border-color: #aaa;
+}
+
+.dropIcon {
+  display: block;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.dropText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.dropSub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Sample row */
+.sampleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.sampleLabel {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.sampleBtn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background var(--transition);
+  font-family: var(--font-sans);
+}
+.sampleBtn:hover:not(:disabled) {
+  background: var(--color-bg-subtle);
+}
+.sampleBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Document list */
+.docList {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Doc row card */
+.docRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.docMeta {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.docIcon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.docInfo {
+  min-width: 0;
+}
+
+.docName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docExtracted {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.docRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Status badge */
+.status {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+.statusPending    { background: var(--color-bg-subtle);  color: var(--color-text-muted); }
+.statusExtracting { background: var(--color-info-bg);    color: var(--color-info-text); }
+.statusDone       { background: var(--color-success-bg); color: var(--color-success-text); }
+.statusError      { background: var(--color-danger-bg);  color: var(--color-danger-text); }
+
+/* Remove button */
+.removeBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+.removeBtn:hover {
+  color: var(--color-danger-text);
+  background: var(--color-danger-bg);
+}
+
+/* Error */
+.error {
+  font-size: 12px;
+  color: var(--color-danger-text);
+  margin-top: 10px;
+}
+
+/* Actions */
+.actions {
+  margin-top: 16px;
+}

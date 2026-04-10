@@ -1,0 +1,24 @@
+/* components/ui/StepNav.module.css */
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: background var(--transition);
+}
+
+.done   { background: var(--color-success-bg); color: var(--color-success-text); }
+.active { background: var(--color-info-bg);    color: var(--color-info-text); }
+.idle   { background: var(--color-bg-subtle);  color: var(--color-text-muted); }

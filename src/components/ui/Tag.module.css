@@ -1,0 +1,18 @@
+/* components/ui/Tag.module.css */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.danger  { background: var(--color-danger-bg);  color: var(--color-danger-text); }
+.info    { background: var(--color-info-bg);    color: var(--color-info-text); }
+.success { background: var(--color-success-bg); color: var(--color-success-text); }
+.warn    { background: var(--color-warn-bg);    color: var(--color-warn-text); }
+.neutral { background: var(--color-bg-subtle);  color: var(--color-text-secondary); }
