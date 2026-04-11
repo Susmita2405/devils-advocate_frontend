@@ -29,6 +29,8 @@ export default function Step5({ caseData, onNext, onBack }) {
     fetchAnalysis();
   }, [caseData]);
 
+  
+
   if (loading) {
     return (
       <div className={styles.loadingWrapper}>

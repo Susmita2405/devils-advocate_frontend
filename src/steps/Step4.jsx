@@ -13,6 +13,8 @@ export default function Step4({ caseData, onNext, onBack }) {
         { date: "Current Status", event: "Legal complaint drafting initiated via NyayaAI." }
       ];
 
+      
+
   return (
     <div className={styles.wrapper}>
       

@@ -88,3 +88,26 @@ p  { font-size: 15px; color: var(--color-text-secondary); }
 .items-center { align-items: center; }
 .flex-wrap { flex-wrap: wrap; }
 .w-full { width: 100%; }
+
+/* ─── PDF Print Styles ─── */
+@media print {
+  body * {
+    visibility: hidden; /* পুরো ওয়েবসাইট লুকিয়ে ফেলো */
+  }
+  #printable-document, #printable-document * {
+    visibility: visible; /* শুধু লিগ্যাল ডকুমেন্ট দেখাও */
+  }
+  #printable-document {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  /* ফালতু জিনিস প্রিন্টে যাতে না আসে */
+  nav, footer, button, .analytics-panel {
+    display: none !important; 
+  }
+}

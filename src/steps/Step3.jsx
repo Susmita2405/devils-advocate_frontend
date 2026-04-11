@@ -43,6 +43,8 @@ export default function Step3({ onNext, onBack }) {
     }
   ];
 
+  
+
   if (loading) {
     return (
       <div className={styles.loadingWrapper}>

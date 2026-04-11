@@ -86,14 +86,17 @@ export async function generateComplaint(caseData) {
     evidence: caseData.documents || [],
     relevantLaws: caseData.laws || [],
     riskAnalysis: caseData.risks || {},
-    language: detectLanguage(caseData.problemText)
+    language: detectLanguage(caseData.problemText) // detectLanguage ফাংশনটা আপনার ফাইলে আগে থেকেই আছে
   };
 
-  const response = await fetch("/api/generate-complain", {
+  const response = await fetch("/api/generate-complaint", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+  if (!response.ok) {
+     throw new Error(`Failed to generate complaint: ${response.status}`);
+  }
   return response.json();
 }
 

@@ -1,20 +1,29 @@
-/* Dashboard Layout: Left (Doc) and Right (Stats) */
 .dashboardContainer {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* 2:1 Ratio. বাঁ দিক বড়, ডান দিক ছোট */
+  grid-template-columns: 1.5fr 1fr;
   gap: 24px;
-  animation: fadeIn 0.5s ease;
-  align-items: start; /* উপর থেকে শুরু হবে */
+  animation: fadeIn 0.4s ease;
+  align-items: start;
 }
 
-/* Document Panel (Left) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Loading ─── */
+.loadingWrapper { text-align: center; padding: 60px 20px; }
+.spinner { width: 40px; height: 40px; border: 3px solid rgba(59, 130, 246, 0.2); border-top-color: var(--primary-l); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loadingTitle { font-size: 18px; color: var(--color-text-primary); margin-bottom: 8px; font-weight: 600;}
+.loadingSub { font-size: 14px; color: var(--color-text-muted); }
+
+/* ─── Document Panel (Left) ─── */
 .documentPanel {
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 .panelHeader {
@@ -33,41 +42,61 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-weight: 600;
   cursor: pointer;
+  transition: all var(--transition);
 }
+
+.downloadBtn:hover { background: var(--primary-l); transform: translateY(-1px); }
 
 .documentBody {
   padding: 24px;
-  max-height: 500px;
+  height: 600px;
   overflow-y: auto;
-  background: #fdfdfd; /* কাগজের মতো ফীল দেওয়ার জন্য একটু আলাদা কালার */
+  background: #EAECEF; /* Desk background */
+}
+
+/* 🔴 LEGAL PAPER LOOK 🔴 */
+.legalPaper {
+  background: #FCFDF8; /* Slight yellowish paper tint */
+  min-height: 100%;
+  padding: 40px 40px 40px 60px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+  border-radius: 4px;
+}
+
+/* Red vertical line common in Indian legal pads */
+.legalLine {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-left: 1px solid #ff9999;
+  border-right: 1px solid #ff9999;
 }
 
 .docText {
   white-space: pre-wrap;
-  font-family: serif; /* লিগ্যাল ডকুমেন্টের ফন্ট */
-  color: #333; /* ডার্ক মোডেও ডকুমেন্ট সাদা কাগজের উপর কালো লেখায় ভালো লাগে */
-  font-size: 15px;
+  font-family: "Georgia", "Times New Roman", serif;
+  color: #111; 
+  font-size: 16px;
   line-height: 1.8;
 }
 
-/* Analytics Panel (Right) */
+/* ─── Analytics Panel (Right) ─── */
 .analyticsPanel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
-.panelTitle {
-  font-size: 16px;
-  color: var(--color-text-primary);
-  margin-bottom: 8px;
-}
+.panelTitle { font-size: 18px; color: var(--color-text-primary); margin-bottom: 4px; font-weight: 600;}
 
 .statBox {
-  background: var(--color-bg);
+  background: var(--color-bg-subtle);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 20px;
@@ -77,46 +106,80 @@
   font-size: 13px;
   color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
 
-.statValueWin {
-  font-size: 36px;
-  font-weight: bold;
-  color: var(--color-success-text); /* সবুজ */
-  margin-bottom: 4px;
+.progressContainer {
+  background: var(--color-bg);
+  height: 8px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border);
 }
 
-.statValueNormal {
-  font-size: 28px;
-  font-weight: bold;
-  color: var(--primary-l); /* নীল */
-  margin-bottom: 4px;
+.progressBar {
+  height: 100%;
+  background: var(--color-success-text); 
+  border-radius: var(--radius-pill);
+  transition: width 1s ease-in-out;
 }
 
-.statSub {
-  font-size: 12px;
-  color: var(--color-text-muted);
-}
+.statValueRow { display: flex; justify-content: space-between; align-items: center; }
+.statValueWin { font-size: 24px; font-weight: bold; color: var(--color-success-text); }
+.statSub { font-size: 12px; color: var(--color-text-muted); }
 
-.timeGrid {
+/* Cost Comparison */
+.costGrid {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-top: 12px;
-  background: var(--color-bg-subtle);
-  padding: 12px;
-  border-radius: 8px;
+  background: var(--color-bg);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  position: relative;
 }
 
-.timeCol { display: flex; flex-direction: column; gap: 4px; }
-.timeTitle { font-size: 12px; color: var(--color-text-secondary); }
-.timeBad { font-weight: bold; color: var(--color-danger-text); }
-.timeGood { font-weight: bold; color: var(--color-success-text); }
+.costCol { display: flex; flex-direction: column; gap: 4px; }
+.costTitle { font-size: 12px; color: var(--color-text-secondary); }
+.costBad { font-size: 14px; font-weight: bold; color: var(--color-danger-text); }
+.costGood { font-size: 14px; font-weight: bold; color: var(--color-success-text); }
 
-/* Responsive: ছোট স্ক্রিনে (মোবাইল) নিচে নিচে দেখাবে */
-@media (max-width: 768px) {
-  .dashboardContainer {
-    grid-template-columns: 1fr;
-  }
+.vsBadge {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-bg-hover);
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* Opposition Strategy */
+.oppositionBox {
+  background: var(--color-warn-bg);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.oppHeader { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.oppHeader h4 { margin: 0; font-size: 15px; color: var(--color-warn-text); }
+.oppDesc { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 16px; }
+
+.oppList { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.oppList li { background: var(--color-bg); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); font-size: 13.5px; line-height: 1.5; }
+
+.oppArgue { color: var(--color-danger-text); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--color-border); }
+.oppCounter { color: var(--color-success-text); }
+
+@media (max-width: 900px) {
+  .dashboardContainer { grid-template-columns: 1fr; }
+  .documentBody { height: 400px; }
 }
